@@ -78,7 +78,7 @@ $messageForm.addEventListener("submit",(e)=>{
     e.preventDefault()
     $messageFormbutton.setAttribute("disabled","disabled")
 
-    socket.emit("user message",e.target.elements.message.value,(error)=>{
+    socket.timeout(5000).emit("user message",e.target.elements.message.value,(error)=>{
         $messageFormbutton.removeAttribute("disabled")
         $messageFormInput.value=""
         $messageFormInput.focus()
@@ -97,7 +97,7 @@ $locationButton.addEventListener("click",()=>{
     $locationButton.setAttribute("disabled","disabled")
 
     navigator.geolocation.getCurrentPosition((position)=>{
-    socket.emit("location", {
+    socket.timeout(5000).emit("location", {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
     },()=>{
@@ -107,7 +107,7 @@ $locationButton.addEventListener("click",()=>{
 })
 })
 
-socket.emit("join",{username,room},(error)=>{
+socket.timeout(5000).emit("join",{username,room},(error)=>{
     if(error){
     alert(error)
     location.href="/"  
